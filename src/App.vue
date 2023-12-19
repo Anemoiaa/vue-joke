@@ -24,16 +24,9 @@
 
 			<!--	Search Result		-->
 			<div
-					v-if="searchedJokes"
+					v-if="searchedJokes && searchedJokes.length"
 					class="mt-4 mb-10 px-8 py-4 bg-white rounded"
 			>
-				<div
-						v-if="searchedJokes.length === 0"
-						class="flex flex-col justify-center items-center gap-4"
-				>
-					<DanceChuck />
-					<span class="text-red-800 uppercase">There are nothing</span>
-				</div>
 				<div class="flex flex-col divide-y">
 					<JokeCard
 							v-for="item in searchedJokes"
@@ -41,6 +34,15 @@
 							:joke="item"
 					/>
 				</div>
+			</div>
+
+			<!--	Not found		-->
+			<div
+					v-else-if="searchedJokes && searchedJokes.length === 0"
+					class="mt-4 flex flex-col justify-center items-center gap-4"
+			>
+				<DanceChuck />
+				<span class="text-red-800 uppercase">There are nothing</span>
 			</div>
 
 		</div>
@@ -69,6 +71,9 @@ let searchTimerId;
 watch(
 		searchString,
 		async (newValue, oldValue) => {
+			if(newValue.length === 0) {
+				return;
+			}
 			clearTimeout(searchTimerId);
 
 			searchTimerId = setTimeout(async () => {
