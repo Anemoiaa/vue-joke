@@ -13,12 +13,7 @@
 			<!--	Search Bar	-->
 			<div class="mt-10">
 				<div class="mx-auto w-fit">
-					<input
-							v-model="searchString"
-							class="px-4 py-2 border rounded"
-							type="text"
-							placeholder="Search"
-					/>
+					<SearchBar @search="handleSearch"/>
 				</div>
 			</div>
 
@@ -48,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onBeforeMount } from "vue";
+import { computed, onBeforeMount } from "vue";
 
 import {useJokeStore} from "@/stores/joke.js";
 
@@ -56,29 +51,18 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import JokeCard from "@/components/JokeCard.vue";
 import DanceChuck from "@/components/Gif/DanceChuck.vue";
 import PaginationList from "@/components/PaginationList.vue";
+import SearchBar from "@/components/SearchBar.vue";
 
 
 const jokeStore = useJokeStore();
 const jokeList = jokeStore.jokeList;
 
-const searchString = ref(null);
 const searchedJokes = computed(() => jokeStore.searchedJokeList);
 
-let searchTimerId;
-watch(
-		searchString,
-		async (newValue, oldValue) => {
-			if(newValue.length === 0) {
-				return;
-			}
-			clearTimeout(searchTimerId);
 
-			searchTimerId = setTimeout(async () => {
-				await jokeStore.searchJokes(newValue);
-			}, 800);
-		},
-		{ immediate: false }
-);
+async function handleSearch(newValue) {
+	await jokeStore.searchJokes(newValue);
+}
 
 onBeforeMount(async () => {
 	await jokeStore.getJokeList();
