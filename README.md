@@ -1,6 +1,3 @@
-# vue-joke
-
-This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
@@ -11,6 +8,18 @@ This template should help get you started developing with Vue 3 in Vite.
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
+
+```sh
+git clone git@github.com:Anemoiaa/vue-joke.git
+```
+
+```sh
+cd vue-joke
+```
+
+```sh
+rename .env-example to .env and configure it
+```
 
 ```sh
 npm install
@@ -27,3 +36,15 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Estimated Time
+
+
+| TASK                                      | Estimated Time |
+|---------------------------------------------|-----------------|
+| Initialize Project, Install Libraries       | 1 hour          |
+| and Plugins, and Set Them Up                |                 |
+| Implement Get and Display 3 Random Jokes    | 2 hours         |
+| Implement Search and Display with pagination| 3 hours         |
+| Minor Changes                               | 0.5 hours       |
+| Implement API Error Handler                 | In progress     |
