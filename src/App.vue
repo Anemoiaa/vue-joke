@@ -24,9 +24,16 @@
 
 			<!--	Search Result		-->
 			<div
-					v-if="searchedJokes.length"
+					v-if="searchedJokes"
 					class="mt-4 mb-10 px-8 py-4 bg-white rounded"
 			>
+				<div
+						v-if="searchedJokes.length === 0"
+						class="flex flex-col justify-center items-center gap-4"
+				>
+					<DanceChuck />
+					<span class="text-red-800 uppercase">There are nothing</span>
+				</div>
 				<div class="flex flex-col divide-y">
 					<JokeCard
 							v-for="item in searchedJokes"
@@ -48,6 +55,7 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import {useJokeStore} from "@/stores/joke.js";
 import {onBeforeMount} from "vue";
 import JokeCard from "@/components/JokeCard.vue";
+import DanceChuck from "@/components/Gif/DanceChuck.vue";
 
 
 const jokeStore = useJokeStore();

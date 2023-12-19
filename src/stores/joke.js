@@ -8,7 +8,7 @@ const api = new ApiService(axiosInstance);
 export const useJokeStore = defineStore('joke', {
     state: () => ({
         jokeList: new Set(),
-        searchedJokeList: [],
+        searchedJokeList: null,
     }),
 
     actions: {
