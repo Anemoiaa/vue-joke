@@ -7,7 +7,7 @@ const api = new ApiService(axiosInstance);
 
 export const useJokeStore = defineStore('joke', {
     state: () => ({
-        jokeList: new Set(),
+        jokeList: [],
         searchedJokeList: null,
     }),
 
@@ -26,10 +26,13 @@ export const useJokeStore = defineStore('joke', {
                     id: newJoke.data.id,
                     value: newJoke.data.value,
                 }
-                this.jokeList.add(jokeObject);
+                if(!this.jokeList.some(item => item.id === jokeObject.id)) {
+                    this.jokeList.push(jokeObject);
+                }
+
             });
 
-            if(this.jokeList.size < options.amount && options.maxDeep > 0) {
+            if(this.jokeList.length < options.amount && options.maxDeep > 0) {
                 const newAmount = options.amount - this.jokeList.size;
                 const newMaxDeep = options.maxDeep - 1;
 
