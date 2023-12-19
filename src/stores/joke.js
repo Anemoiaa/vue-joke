@@ -38,5 +38,11 @@ export const useJokeStore = defineStore('joke', {
 
         },
 
+        async searchJokes(query) {
+            const response = await api.searchJokes(query);
+            console.log(response.data.result)
+            this.searchedJokeList = response.data.result;
+        }
+
     },
 });

@@ -1,46 +1,75 @@
 <template>
 	<DefaultLayout>
 		<div class="container mx-auto mt-10">
-
 			<!-- JOKES -->
 			<div class="flex flex-col divide-y px-8 py-4 rounded bg-white">
-				<div
+				<JokeCard
 						v-for="item in jokeList"
 						:key="item.id"
-						class="flex items-center gap-4 py-4"
-				>
-					<img
-							class="w-10 h-10"
-							src="https://api.chucknorris.io/img/chucknorris_logo_coloured_small@2x.png" alt="">
-					<p class="text-base">{{ item.value }}</p>
-				</div>
+						:joke="item"
+				/>
 			</div>
 
 			<!--	Search Bar	-->
-			<div class="mt-10 mx-auto">
-				<input
-						v-model="searchString"
-						type="text"
-						placeholder="Search">
+			<div class="mt-10">
+				<div class="mx-auto w-fit">
+					<input
+							v-model="searchString"
+							class="px-4 py-2 border rounded"
+							type="text"
+							placeholder="Search"
+					/>
+				</div>
 			</div>
+
+			<!--	Search Result		-->
+			<div
+					v-if="searchedJokes.length"
+					class="mt-4 mb-10 px-8 py-4 bg-white rounded"
+			>
+				<div class="flex flex-col divide-y">
+					<JokeCard
+							v-for="item in searchedJokes"
+							:key="item.id"
+							:joke="item"
+					/>
+				</div>
+			</div>
+
 		</div>
 	</DefaultLayout>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {computed, ref, watch} from "vue";
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 import {useJokeStore} from "@/stores/joke.js";
 import {onBeforeMount} from "vue";
+import JokeCard from "@/components/JokeCard.vue";
 
 
 const jokeStore = useJokeStore();
 const jokeList = jokeStore.jokeList;
+const searchedJokes = computed(() => jokeStore.searchedJokeList);
 
 
 const searchString = ref(null);
+
+let searchTimerId;
+watch(
+		searchString,
+		async (newValue, oldValue) => {
+			clearTimeout(searchTimerId);
+
+			searchTimerId = setTimeout(async () => {
+				await jokeStore.searchJokes(newValue);
+			}, 800);
+		},
+		{ immediate: false }
+);
+
 
 onBeforeMount(async () => {
 	await jokeStore.getJokeList();
