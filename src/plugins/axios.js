@@ -8,13 +8,14 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(function (config) {
+    NProgress.start()
     return config;
 }, function (error) {
     return Promise.reject(error);
 });
 
 axiosInstance.interceptors.response.use(function (response) {
-
+    NProgress.done()
     return response;
 }, function (error) {
     return Promise.reject(error);
