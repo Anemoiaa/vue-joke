@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body,
+#app {
+
+    height: 100%;
+    line-height: 1;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+@layer components {
+    .container {
+        @apply w-full max-w-[560px] sm:max-w-[960px] lg:max-w-[1280px] px-[15px];
+    }
+}
