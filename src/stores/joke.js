@@ -20,7 +20,7 @@ export const useJokeStore = defineStore('joke', {
                     this.jokeList.push(res.data);
                     amount--;
                 }
-                maxRequestAmount++;
+                maxRequestAmount--;
             } while(amount > 0 && maxRequestAmount > 0)
 
         },
