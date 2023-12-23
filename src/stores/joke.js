@@ -26,7 +26,10 @@ export const useJokeStore = defineStore('joke', {
         },
 
         async searchJokes(query) {
-            const response = await api.searchJokes(query);
+            const params = new URLSearchParams({
+                query: query,
+            });
+            const response = await api.searchJokes(params);
             this.searchedJokeList = response.data.result;
         }
 

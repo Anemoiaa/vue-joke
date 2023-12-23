@@ -7,8 +7,8 @@ class ApiService {
         return await this.http.get('jokes/random');
     }
 
-    async searchJokes(query) {
-        return await this.http.get(`jokes/search?query=${query}`);
+    async searchJokes(params) {
+        return await this.http.get(`jokes/search?${params}`);
     }
 }
 
